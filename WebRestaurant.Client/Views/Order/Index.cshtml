@@ -1,0 +1,92 @@
+﻿@model IEnumerable<WebRestaurant.Shared.Dtos.OrderDto>
+
+@{
+    ViewData["Title"] = "Список";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Список</h1>
+@if (User.IsInRole("admin"))
+{
+    <p>
+        <a asp-action="Create">Создать новый</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duration)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DinnerTable)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Client)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duration)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DinnerTable.Number)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Client.Name)
+            </td>
+            <td>
+                @if (item.Status.Id == 1)
+                {
+                    <span class="genric-btn warning-border">@Html.DisplayFor(modelItem => item.Status.Name)</span>
+                }
+                @if (item.Status.Id == 2)
+                {
+                    <span class="genric-btn info-border">@Html.DisplayFor(modelItem => item.Status.Name)</span>
+                }
+                @if (item.Status.Id == 3)
+                {
+                    <span class="genric-btn success-border">@Html.DisplayFor(modelItem => item.Status.Name)</span>
+                }
+                @if (item.Status.Id == 4)
+                {
+                    <span class="genric-btn danger-border">@Html.DisplayFor(modelItem => item.Status.Name)</span>
+                }
+            </td>
+            <td>
+                @if (User.IsInRole("admin"))
+                {
+                    <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> <text>|</text>
+                    <a asp-action="Details" asp-route-id="@item.Id">Подробности</a> <text>|</text>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+                }else
+                {
+                    if (item.Status.Id == 1)
+                    {
+                        <a class="genric-btn primary e-large add-to-cart-button" href="https://yoomoney.ru/to/4100118630300845">Оплатить</a>
+                    }
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
