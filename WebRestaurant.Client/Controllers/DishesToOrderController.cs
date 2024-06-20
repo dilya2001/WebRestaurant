@@ -28,7 +28,7 @@ namespace WebRestaurant.Client.Controllers
             this.dishInteractor = dishInteractor;
         }
 
-        // GET: DishesToOrder
+        // GET: DishesToOrder ...
         public async Task<IActionResult> Index()
         {
             var response = await interactor.GetAll();
